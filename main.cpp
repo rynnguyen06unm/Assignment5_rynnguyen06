@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
         std::cout << "error opening file" << "\n";
         return 1;
     }
+
     std::string line;
     
     while (std::getline(input_file, line))
@@ -29,10 +30,29 @@ int main(int argc, char* argv[])
         {
             continue;
         }
-    }
-    
+
     std::string data_group[5];
 
+    std::string::size_type start = 0;
+
+    for (int i = 0; i < 4; i++)
+    {
+        std::string::size_type comma = line.find(',', start);
         
+        if (comma == std::string::npos)
+            {
+                std::cout << "Invalid line in file.\n";
+                return 1;
+            }
+        
+        data_group[i] = line.substr(start, comma - start);
+        start = comma + 1;
+    }
+
+    data_group[4] = line.substr(start);
+        
+    }
+
     return 0;
+    
 }
