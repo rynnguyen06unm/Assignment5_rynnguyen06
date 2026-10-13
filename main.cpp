@@ -4,7 +4,7 @@
 #include <fstream>
 #include "pixel.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char* argv[]) // step 3 cmd line argument 
 {
     if (argc < 2)
     {
@@ -23,7 +23,8 @@ int main(int argc, char* argv[])
     }
 
     std::string line;
-    
+
+    // step 3 parseing lines
     while (std::getline(input_file, line))
     {
         if (line.empty())
@@ -35,6 +36,7 @@ int main(int argc, char* argv[])
 
     std::string::size_type start = 0;
 
+    // step 3 grabbing values between commas
     for (int i = 0; i < 4; i++)
     {
         std::string::size_type comma = line.find(',', start);
@@ -50,9 +52,21 @@ int main(int argc, char* argv[])
     }
 
     data_group[4] = line.substr(start);
+
+    // step 3 loading every pixel into object
+    Pixel pixel;
+    pixel.x = std::stoi(data_group[0]);
+    pixel.y = std::stoi(data_group[1]);
+    pixel.r = std::stof(data_group[2]);
+    pixel.g = std::stof(data_group[3]);
+    pixel.b = std::stof(data_group[4]);
+    pixel_list.push_back(pixel);
         
     }
 
+    input_file.close();
+    std::cout << "pixels loaded: " << pixel_list.size() << "\n";
+    
     return 0;
     
 }
