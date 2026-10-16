@@ -26,6 +26,9 @@ void average_colors(std::vector<Pixel> &pixel_list)
 // step 4 second function 
 void flip_vertically(std::vector<Pixel> &pixel_list)
 {
+    int width = 512;
+    int height = 256;
+    
     for (int x = 0; x < width; x++)
     {
         for (int y = 0; y < height / 2; y++)
@@ -109,6 +112,25 @@ int main(int argc, char* argv[]) // step 3 cmd line argument
 
     input_file.close();
     std::cout << "pixels loaded: " << pixel_list.size() << "\n";
+
+    // step 4 calling functions 
+    average_colors(pixel_list);
+    flip_vertically(pixel_list);
+
+    // step 5 creating new file 
+    std::ofstream output_file("flipped.dat");
+
+    for (const Pixel& pixel : pixel_list)
+    {
+        output_file << pixel.x << ","
+                    << pixel.y << ","
+                    << pixel.r << ","
+                    << pixel.g << ","
+                    << pixel.b << "\n";
+    }
+
+    output_file.close();
+    std::cout << "pixels saved to flipped.dat";
     
     return 0;
     
