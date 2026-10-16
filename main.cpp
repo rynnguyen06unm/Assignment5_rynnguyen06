@@ -4,6 +4,50 @@
 #include <fstream>
 #include "pixel.h"
 
+// step 4 first function
+void average_colors(std::vector<Pixel> &pixel_list)
+{
+    double total_r = 0;
+    double total_g = 0;
+    double total_b = 0;
+    
+    for (const Pixel& pixel : pixel_list)
+    {
+        total_r += pixel.r;
+        total_g += pixel.g;
+        total_b += pixel.b;
+    }
+
+    std::cout << "average reds: " << total_r / pixel_list.size() << "\n";
+    std::cout << "average greens: " << total_g / pixel_list.size() << "\n";
+    std::cout << "average blues: " << total_b / pixel_list.size() << "\n";
+}
+
+// step 4 second function 
+void flip_vertically(std::vector<Pixel> &pixel_list)
+{
+    for (int x = 0; x < width; x++)
+    {
+        for (int y = 0; y < height / 2; y++)
+        {
+            int first = x * height + y;
+            int opposite = x * height + (height - 1 - y);
+
+            float temp = pixel_list[first].r;
+            pixel_list[first].r = pixel_list[opposite].r;
+            pixel_list[opposite].r = temp;
+
+            temp = pixel_list[first].g;
+            pixel_list[first].g = pixel_list[opposite].g;
+            pixel_list[opposite].g = temp;
+
+            temp = pixel_list[first].b;
+            pixel_list[first].b = pixel_list[opposite].b;
+            pixel_list[opposite].b = temp;
+        }
+    }
+}
+
 int main(int argc, char* argv[]) // step 3 cmd line argument 
 {
     if (argc < 2)
@@ -33,7 +77,6 @@ int main(int argc, char* argv[]) // step 3 cmd line argument
         }
 
     std::string data_group[5];
-
     std::string::size_type start = 0;
 
     // step 3 grabbing values between commas
